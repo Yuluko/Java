@@ -1,0 +1,104 @@
+import java.util.Scanner;
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.Graphics;
+
+/**
+ * Description 
+ * ____________
+ * ____________
+ * @author Lukoshyna
+ * @version 102724
+ */
+import java.awt.Color;
+import java.awt.Font;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.util.Scanner;
+
+public class OlympicsDrawing {
+
+    public static void main(String[] args) {
+        testOlympicsYName();
+    }
+
+    // Main method
+    public static void testOlympicsYName() {
+        Draw win = new Draw(); // Create a Draw object
+        win.setTitle("Paris Olympics by YL");
+        win.setXscale(0, 400);
+        win.setYscale(400, 0);
+
+        // Fill background with light blue color
+        win.setPenColor(176, 195, 221); // Light blue background color
+        win.filledRectangle(0, 0, 400, 400); // Fill rectangle for background
+
+        // Draw the title
+        title(win, 50, 50); // Position of the title
+
+        // Draw Olympic rings directly using the circle method
+        drawOlympicRings(win);
+
+        // User interaction
+        Scanner keyboard = new Scanner(System.in);
+        boolean keepRunning = true;
+        double x = 0, y = 0;
+
+        while (keepRunning) {
+            keepRunning = ifStatements(win, keyboard, x, y);
+        }
+
+        System.out.println("Program finished.");
+    }
+
+    // Method to draw title
+    public static void title(Draw win, double x, double y) {
+        win.setFont(new Font("Arial", Font.BOLD, 20)); // Set font for the title
+        win.setPenColor(Color.BLACK);
+        win.text(x+25, y-5, "Paris Olympics"); // Draw the title
+        win.text(x+25, y + 20, "by YL"); // Draw author information below the title
+    }
+
+    // Method to draw Olympic rings
+    public static void drawOlympicRings(Draw win) {
+        // Set pen radius for circles
+        win.setPenRadius(0.01); // Adjust radius for circle outline
+        
+        // Draw each Olympic ring with specific colors and positions
+        win.setPenColor(Color.BLUE);
+        win.circle(50, 100, 23);   // Blue ring
+
+        win.setPenColor(Color.BLACK);
+        win.circle(100, 100, 23);  // Black ring
+
+        win.setPenColor(Color.RED);
+        win.circle(150, 100, 23);  // Red ring
+
+        win.setPenColor(Color.YELLOW);
+        win.circle(75, 130, 23);   // Yellow ring
+
+        win.setPenColor(Color.GREEN);
+        win.circle(125, 130, 23);  // Green ring
+    }
+
+    // Method for user input and actions
+    public static boolean ifStatements(Draw scrn, Scanner keyboard, double x, double y) {
+        boolean keepRunning = true;
+        System.out.print("Type 'b' <Enter> to bite OR 'q' <Enter> to quit: ");
+        String input = keyboard.nextLine();
+
+        if (input.equals("b")) {           
+            x = scrn.mouseX();
+            y = scrn.mouseY();
+            if (x <= 200 && y >= 200) {
+                scrn.setPenColor(176, 195, 221);
+                scrn.filledCircle(x, y, 20); // Draw a filled circle at mouse position
+            }
+        } else if (input.equals("q")) {
+            keepRunning = false; // Exit loop if 'q' is pressed
+        }
+
+        return keepRunning;
+    }
+}
